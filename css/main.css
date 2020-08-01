@@ -1822,7 +1822,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #e38324;
+  background: #9650ff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2990,18 +2990,78 @@ pre .javascript .function {
 .headband {
   display: none;
 }
-.header-inner {
-  margin: 10px auto;
+.header {
+  width: 80%;
 }
-.sidebar-inner {
-  margin: 10px auto;
+@media (min-width: 768px) and (max-width: 991px) {
+  .header {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .header {
+    width: 100%;
+  }
+}
+.container .main-inner {
+  width: 80%;
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .container .main-inner {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .container .main-inner {
+    width: 100%;
+  }
 }
 .content-wrap {
-  margin: 10px auto;
+  margin: 25px auto;
+  padding-top: 40px;
+  padding-right: 100px;
+  padding-bottom: 40px;
+  padding-left: 100px;
+  width: calc(100% - 280px);
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .content-wrap {
+    width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .content-wrap {
+    width: 100%;
+  }
+}
+body {
+  background: #f0f0f0;
+}
+.header-inner {
+  margin: 25px auto;
+}
+.sidebar-inner {
+  margin: 25px auto;
 }
 .sidebar-inner.affix {
-  top: 2px;
+  top: 1px;
+}
+.sidebar {
+  background: #f0f0f0;
+}
+.back-to-top {
+  background: #f0f0f0;
 }
 .vpower.txt-right {
   display: none;
+}
+.hider_title {
+  font-family: "Microsoft Yahei";
+  cursor: pointer;
+}
+.close:after {
+  content: "▼";
+}
+.open:after {
+  content: "▲";
 }
