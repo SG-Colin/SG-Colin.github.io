@@ -1,47 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>NexT 主题优化</title>
-    <url>/2020/07/22/Next/</url>
-    <content><![CDATA[<p>简单记录一下优化 NexT 主题过程中的一些细节。</p>
-<p>There is a negligible beginning in all great action and thought.</p>
+    <title>AtCoder Beginner Contest 175</title>
+    <url>/2020/08/16/ABC175/</url>
+    <content><![CDATA[<p>官方题解链接： <a href="https://atcoder.jp/contests/abc175/editorial" target="_blank" rel="noopener">AtCoder Beginner Contest 175 Editorial</a></p>
 <a id="more"></a>
-<h3 id="圆角设置"><a href="#圆角设置" class="headerlink" title="圆角设置"></a>圆角设置</h3><p>此优化仅对 Pisces 和 Gemini 主题适用。</p>
-<p>(以 Pisces 为例）修改文件 <code>\themes\next\source\css\_variables\Pisces.styl</code></p>
-<p>将 <code>Borders</code> 下对应位置的 <code>initial</code> 改为</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$border-radius-inner            = 15px 15px 15px 15px;</span><br><span class="line">$border-radius                  = 15px;</span><br></pre></td></tr></table></figure>
-<h3 id="背景色更换"><a href="#背景色更换" class="headerlink" title="背景色更换"></a>背景色更换</h3><p>修改文件 <code>themes\next\source\css\_custom\custom.styl</code> ，添加：</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#F0F0F0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="去除顶部细线"><a href="#去除顶部细线" class="headerlink" title="去除顶部细线"></a>去除顶部细线</h3><p>修改文件 <code>themes\next\source\css\_custom\custom.styl</code> </p>
-<p>添加代码 <code>.headband {display:none;}</code></p>
-<h3 id="页面宽度位置设置"><a href="#页面宽度位置设置" class="headerlink" title="页面宽度位置设置"></a>页面宽度位置设置</h3><p>修改文件 <code>themes\next\source\css\_custom\custom.styl</code> ，添加：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">.content-wrap &#123;</span><br><span class="line">    margin: 25px auto;</span><br><span class="line">    padding-top: 40px;</span><br><span class="line">    padding-right: 100px;</span><br><span class="line">    padding-bottom: 40px;</span><br><span class="line">    padding-left: 100px;</span><br><span class="line">    width: calc(100% - 280px);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.header-inner &#123;</span><br><span class="line">    margin: 25px auto;</span><br><span class="line">&#125;</span><br><span class="line">.sidebar-inner &#123;</span><br><span class="line">    margin: 25px auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其实想要修改页面形态效果，直接在对应的网页 <code>Styles</code>上修改，然后复制到 <code>custom.styl</code> 即可。</p>
-<h3 id="Sidebar-头像链接主页"><a href="#Sidebar-头像链接主页" class="headerlink" title="Sidebar 头像链接主页"></a>Sidebar 头像链接主页</h3><p>修改文件 <code>themes\next\layout\_macro\sidebar.swig</code>，找到对应位置：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">"site-author-image"</span> <span class="attr">itemprop</span>=<span class="string">"image"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">src</span>=<span class="string">"&#123;&#123; url_for( theme.avatar | default(theme.images + '/avatar.gif') ) &#125;&#125;"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">alt</span>=<span class="string">"&#123;&#123; theme.author &#125;&#125;"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>找到中间三行，添加第一行 <code>&lt;a href=&quot;/&quot;&gt;</code> 和最后一行 <code>&lt;/a&gt;</code> 即可，中间部分不用修改。</p>
-<h3 id="Sidebar-posts-链接修复"><a href="#Sidebar-posts-链接修复" class="headerlink" title="Sidebar posts 链接修复"></a>Sidebar posts 链接修复</h3><p>修改文件 <code>themes/next/layout/_macro/sidebar.swing</code> ，找到对应位置：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> config.archive_dir != <span class="string">'/'</span> and site.posts.length &gt; <span class="number">0</span> %&#125;</span><br><span class="line">	&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"site-state-item site-state-posts"</span>&gt;</span><br><span class="line">    	&#123;% <span class="keyword">if</span> theme.menu.archives %&#125;</span><br><span class="line">        	&lt;a href=<span class="string">"&#123;&#123; url_for(theme.menu.archives).split('||')[0] | trim &#125;&#125;"</span>&gt;</span><br><span class="line">        &#123;% <span class="keyword">else</span> %&#125;</span><br><span class="line">            &lt;a href=<span class="string">"&#123;&#123; url_for(config.archive_dir) &#125;&#125;"</span>&gt;</span><br><span class="line">        &#123;% endif %&#125;</span><br><span class="line">            	&lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">"site-state-item-count"</span>&gt;&#123;&#123; site.posts.length &#125;&#125;&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">            	&lt;span class="site-state-item-name"&gt;&#123;&#123; __('state.posts') &#125;&#125;&lt;/</span>span&gt;</span><br><span class="line">      		&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-<p>删掉判断部分，保留 <code>else</code> 的内容，即：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> config.archive_dir != <span class="string">'/'</span> and site.posts.length &gt; <span class="number">0</span> %&#125;</span><br><span class="line">	&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"site-state-item site-state-posts"</span>&gt;</span><br><span class="line">    	&lt;a href=<span class="string">"&#123;&#123; url_for(config.archive_dir) &#125;&#125;"</span>&gt;</span><br><span class="line">        	&lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">"site-state-item-count"</span>&gt;&#123;&#123; site.posts.length &#125;&#125;&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">            &lt;span class="site-state-item-name"&gt;&#123;&#123; __('state.posts') &#125;&#125;&lt;/</span>span&gt;</span><br><span class="line">        &lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Sidebar-Social-开关"><a href="#Sidebar-Social-开关" class="headerlink" title="Sidebar Social 开关"></a>Sidebar Social 开关</h3><p>修改文件 <code>themes/next/_config.yml</code> ，搜索 <code>social</code>，打开你想要的开关。</p>
-<p>貌似一些 <code>Social</code> 开关是隐藏的，比如 <code>QQ</code> ， <code>Wechat</code> 或 <code>Weibo</code> ，仿照格式写就可以。</p>
-<p>如果想只显示图标（如本站），打开 <code>social_icons</code> 下的 <code>icons_only</code> 开关即可。</p>
-<h3 id="Sidebar-显示进度条和返回"><a href="#Sidebar-显示进度条和返回" class="headerlink" title="Sidebar 显示进度条和返回"></a>Sidebar 显示进度条和返回</h3><p>修改文件 <code>themes/next/_config.yml</code> ，搜索关键字 <code>b2t</code> ，把这两个选项改为 <code>true</code> ：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Back to top in sidebar</span></span><br><span class="line"><span class="attr">b2t:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Scroll percent label in b2t button</span></span><br><span class="line"><span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<h3 id="pdf-文件显示"><a href="#pdf-文件显示" class="headerlink" title="pdf 文件显示"></a>pdf 文件显示</h3><p>参考：<a href="https://blog.csdn.net/wugenqiang/article/details/88377669" target="_blank" rel="noopener">Hexo NexT主题内添加pdf 插件</a></p>
-<h3 id="折叠展开功能"><a href="#折叠展开功能" class="headerlink" title="折叠展开功能"></a>折叠展开功能</h3><p>参考：<a href="https://www.cnblogs.com/woshimrf/p/hexo-fold-block.html" target="_blank" rel="noopener">Hexo NexT 主题内添加折叠块功能</a></p>
-<h3 id="修改文章-Tag-图标"><a href="#修改文章-Tag-图标" class="headerlink" title="修改文章 Tag 图标"></a>修改文章 Tag 图标</h3><p>修改文件 <code>/themes/next/layout/_macro/post.swing</code> </p>
-<p>搜索 <code>rel=&quot;tag&quot;&gt;#</code> 将 <code>#</code> 替换为 <code>&lt;i class=&quot;fa fa-envira&quot;&gt;&lt;/i&gt;</code>，即可显示 fa-tag 图标。</p>
-<p>To be continued…</p>
+<h2 id="A-Rainy-Season"><a href="#A-Rainy-Season" class="headerlink" title="A - Rainy Season"></a>A - Rainy Season</h2><p><a href="https://atcoder.jp/contests/abc175/tasks/abc175_a" target="_blank" rel="noopener">ABC 175 A</a></p>
+<p>求一个字符串中最长连续字符 <code>&#39;R&#39;</code> 的长度， $|S| = 3$ 。</p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>暴力扫描。</p>
+<h2 id="B-Making-Triangle"><a href="#B-Making-Triangle" class="headerlink" title="B - Making Triangle"></a>B - Making Triangle</h2><p><a href="https://atcoder.jp/contests/abc175/tasks/abc175_b" target="_blank" rel="noopener">ABC 175 B</a></p>
+<p>给定 $n$ 个数的数组 $L$ , 求三元组 $(i,j,k)$ 的个数 $(1\le i&lt;j&lt;k\le n)$ ，满足：</p>
+<ul>
+<li>$L_i,L_j,L_k$ 各不相同</li>
+<li>$L_i,L_j,L_k$ 可构成三角形</li>
+</ul>
+<p>满足 $n\le 100$ ，$L_i \le 10^9$ </p>
+<h3 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h3><p>$\mathcal O(n^3)$ 暴力扫描统计。</p>
+<h2 id="C-Walking-Takahashi"><a href="#C-Walking-Takahashi" class="headerlink" title="C - Walking Takahashi"></a>C - Walking Takahashi</h2><p><a href="https://atcoder.jp/contests/abc175/tasks/abc175_c" target="_blank" rel="noopener">ABC 175 C</a></p>
+<p>一个人在整数轴坐标 $x$ 处，进行 $k$ 次移动。</p>
+<p>每次可以向左或向右移动 $d$ 个单位，求最后坐标 <strong>绝对值最小值</strong> 。</p>
+<p>满足 $-10^{15}\le x\le 10^{15}$ ， $1\le k,d\le 10^{15}$</p>
+<h3 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h3><p>如果回不到零点附近就朝着零点方向一直走。</p>
+<p>如果回到零点附近就在零点两侧来回走。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">ll cnt = (x + d - <span class="number">1</span>) / d;</span><br><span class="line"><span class="keyword">if</span> (cnt &gt; k) <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, x - k * d);</span><br><span class="line"><span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, <span class="built_in">abs</span>(x - cnt * d + ((k - cnt) &amp; <span class="number">1</span>) * d));</span><br></pre></td></tr></table></figure>
+<h2 id="D-Moving-Piece"><a href="#D-Moving-Piece" class="headerlink" title="D - Moving Piece"></a>D - Moving Piece</h2><p><a href="https://atcoder.jp/contests/abc175/tasks/abc175_d" target="_blank" rel="noopener">ABC 175 D</a></p>
+<p>（留坑）</p>
+<h3 id="Solution-3"><a href="#Solution-3" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="E-Picking-Goods"><a href="#E-Picking-Goods" class="headerlink" title="E - Picking Goods"></a>E - Picking Goods</h2><p><a href="https://atcoder.jp/contests/abc175/tasks/abc175_e" target="_blank" rel="noopener">ABC 175 E</a></p>
+<p>在一个 $r$ 行 $c$ 列的矩阵上，有 $k$ 个 <strong>坐标互不相同</strong> 的宝物，在 $(r_i,c_i)$ 上的宝物价值 $v_i$。</p>
+<p>开始在 $(1,1)$ 处，可以向右或向下走，即从 $(i,j)$ 移动到 $(i+1,j)$ 或 $(i,j+1)$ 。</p>
+<p>到某个位置 <strong>可以不取</strong> 对应位置的宝物，每行最多取三个，问最后总价值最多多少。</p>
+<p>满足 $1\le r,c\le 3000$ ， $1\le v_i\le 10^9$</p>
+<h3 id="Solution-4"><a href="#Solution-4" class="headerlink" title="Solution"></a>Solution</h3><p>$f[i][j][0/1/2/3]$ 代表当前位置 $(i,j)$ ，当前行已经拿了 $0/1/2/3$ 个东西，$\mathcal O(n^2)$ DP。</p>
+<p>（F 留坑）</p>
 ]]></content>
+      <categories>
+        <category>套题</category>
+        <category>AtCoder</category>
+      </categories>
+      <tags>
+        <tag>构造</tag>
+        <tag>动态规划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AtCoder Beginner Contest 178</title>
+    <url>/2020/09/14/ABC178/</url>
+    <content><![CDATA[<p>官方题解链接： <a href="https://atcoder.jp/contests/abc178/editorial" target="_blank" rel="noopener">AtCoder Beginner Contest 178 Editorial</a></p>
+<a id="more"></a>
+<h2 id="A-Not"><a href="#A-Not" class="headerlink" title="A - Not"></a>A - Not</h2><p><a href="https://atcoder.jp/contests/abc178/tasks/abc178_a" target="_blank" rel="noopener">ABC 178 A</a></p>
+<p>输入 $x$ ，输出 $1-x$ 。</p>
+<h2 id="B-Product-Max"><a href="#B-Product-Max" class="headerlink" title="B - Product Max"></a>B - Product Max</h2><p><a href="https://atcoder.jp/contests/abc178/tasks/abc178_b" target="_blank" rel="noopener">ABC 178 B</a></p>
+<p> $\forall x\in [a, b],\forall y\in[c,d]$ ，求 $xy$ 最大值。</p>
+<p>满足 $-10^9\le a\le b\le 10^9,\ -10^9\le c\le d\le 10^9$</p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>答案显然是 $\max\{ac,ad,bc,bd\}$ 。</p>
+<h2 id="C-Ubiquity"><a href="#C-Ubiquity" class="headerlink" title="C - Ubiquity"></a>C - Ubiquity</h2><p><a href="https://atcoder.jp/contests/abc178/tasks/abc178_c" target="_blank" rel="noopener">ABC 178 C</a></p>
+<p>计数长度为 $n$ 的整数数列 $A$ 的个数，满足：</p>
+<ul>
+<li>$0\le A_i\le 9$</li>
+<li>保证数列中至少存在一个 $0$ 和一个 $9$ </li>
+</ul>
+<p>满足 $n\le 10^{6}$ ，答案对 $10^9 + 7$ 取模。</p>
+<h3 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h3><p>容斥，不考虑条件 $2$ 的方案数有 $10^n$ ，不满足条件 $2$ 的方案数为 $2\times 9^n - 8^n$ ，相减。</p>
+<h2 id="D-Redistribution"><a href="#D-Redistribution" class="headerlink" title="D - Redistribution"></a>D - Redistribution</h2><p><a href="https://atcoder.jp/contests/abc178/tasks/abc178_d" target="_blank" rel="noopener">ABC 178 D</a></p>
+<p>将整数 $S$ 划分成数列 $A$ ，长度不限，每项最少为 $3$，求方案数。</p>
+<p>满足 $S\le 2000$</p>
+<h3 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h3><p>开始想着整数拆分的 DP ，但是很难解决多重集的排列问题。</p>
+<p>换个思路，设 $f[i]$ 表示当前已经划分走 $i$ 的方案数，则 $f[i]=\sum_{j=3}^if[i - j]$ 。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">f[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; ++i)</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">3</span>; j &lt;= i; ++j) f[i] = (f[i] + f[i - j]) % mod;</span><br></pre></td></tr></table></figure>
+<h2 id="E-Dist-Max"><a href="#E-Dist-Max" class="headerlink" title="E - Dist Max"></a>E - Dist Max</h2><p><a href="https://atcoder.jp/contests/abc178/tasks/abc178_e" target="_blank" rel="noopener">ABC 178 E</a></p>
+<p>求 $n$ 个点两两曼哈顿距离的最大值。</p>
+<p>满足 $2\le n \le 2\times 10^5$ ， $1\le x_i,y_i\le 10^9$</p>
+<h3 id="Solution-3"><a href="#Solution-3" class="headerlink" title="Solution"></a>Solution</h3><p>分讨。</p>
+<ol>
+<li><p>$x_1−x_2\ge 0,y_1−y_2\ge 0$</p>
+<p>$|x_1−x_2|+|y_1−y_2|=x_1−x_2+y_1−y_2=(x_1+y_1)−(x_2+y_2)$ </p>
+</li>
+<li><p>$x_1−x_2&lt;0,y_1−y_2\ge 0$</p>
+<p>$|x_1−x_2|+|y_1−y_2|=x_2−x_1+y_1−y_2=(x_2−y_2)−(x_1−y_1)$</p>
+</li>
+<li><p>$x_1−x_2\ge 0,y_1−y_2&lt;0$</p>
+<p>$|x_1−x_2|+|y_1−y_2|=x_1−x_2+y_2−y_1=(x_1−y_1)−(x_2−y_2)$</p>
+</li>
+<li><p>$x_1−x_2&lt;0,y_1−y_2&lt;0$</p>
+<p>$|x_1−x_2|+|y_1−y_2|=x_2−x_1+y_2−y_1=(x_2+y_2)−(x_1+y_1)$</p>
+</li>
+</ol>
+<p>所以答案 $\max \big\{ \max \{x_i+y_i \}− \min \{x_i+y_i \}, \max \{x_i−y_i \} − \min \{x_i −y_i\} \big\}$ ，注意初始化。</p>
+<h2 id="F-Contrast"><a href="#F-Contrast" class="headerlink" title="F - Contrast"></a>F - Contrast</h2><p><a href="https://atcoder.jp/contests/abc178/tasks/abc178_f" target="_blank" rel="noopener">ABC 178 F</a></p>
+<p>给定两个长度为 $n$ 的数列 $A,B$ ，保证两数列都是升序。</p>
+<p>问是否能通过重排 $B$ ，使得不存在 $i\in [1,n]$ ，有 $A_i = B_i$ ，输出方案。</p>
+<p>满足 $2\le n \le 2\times 10^5$ ， $1\le A_i,B_i\le n$</p>
+<h3 id="Solution-4"><a href="#Solution-4" class="headerlink" title="Solution"></a>Solution</h3><p>At 的构造还是很有意思。</p>
+<p>考虑把 $B$ 翻转，则 $A$ 升序， $B$ 降序 ，若有不合法位置，则相同的数字一定只有一个。</p>
+<p>记相同的数字为 $x$ ，相同数字的区间为 $[l, r]$ 。</p>
+<p>考虑 $B$ 中某一个换过来的位置 $i$ ，那么需要保证 $a[i] \ne x$ 且 $b[i] \ne x$ ，否则换后依然不合法。</p>
+<p>记录 $A$ 和 $B$ (翻转后)  出现 $x$ 最靠左的位置 $L$ ，出现 $x$ 最靠右的位置 $R$ 。</p>
+<p>则可以交换的位置 $i\in [L,R]$ ，有 $L - 1 + n - R$ 个，若这个数 $&gt;r-l+1$ 则有解。</p>
+<p>然后就和两侧交换就好了。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">reverse(b + <span class="number">1</span>, b + <span class="number">1</span> + n);</span><br><span class="line"><span class="keyword">int</span> x, l = <span class="number">0</span>, r, L, R;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">  <span class="keyword">if</span> (a[i] == b[i]) l ? ++r : l = r = i;</span><br><span class="line">x = a[l];</span><br><span class="line"><span class="keyword">if</span> (!l) &#123;<span class="built_in">print</span>(); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">  <span class="keyword">if</span> (a[i] == x || b[i] == x) &#123;L = i; <span class="keyword">break</span>;&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = n; i; --i)</span><br><span class="line">  <span class="keyword">if</span> (a[i] == x || b[i] == x) &#123;R = i; <span class="keyword">break</span>;&#125;</span><br><span class="line"><span class="keyword">if</span> (L - <span class="number">1</span> + n - R &lt; (r - l + <span class="number">1</span>)) &#123;<span class="built_in">puts</span>(<span class="string">"No"</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line"><span class="keyword">int</span> lim = <span class="built_in">min</span>(L - <span class="number">1</span>, r - l + <span class="number">1</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= lim; ++i) swap(b[i], b[l + i - <span class="number">1</span>]);</span><br><span class="line">lim = r - l + <span class="number">1</span> - lim;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= lim; ++i) swap(b[n - i + <span class="number">1</span>], b[r - i + <span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
+<p>（挖坑 感觉字典序最小有搞头）</p>
+]]></content>
+      <categories>
+        <category>套题</category>
+        <category>AtCoder</category>
+      </categories>
+      <tags>
+        <tag>构造</tag>
+        <tag>计数</tag>
+      </tags>
   </entry>
   <entry>
     <title>线性筛与积性函数</title>
     <url>/2020/07/23/%E7%BA%BF%E6%80%A7%E7%AD%9B%E7%A7%AF%E6%80%A7%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<p>线性筛是一种数论筛法，可以筛出一定范围内的质数或<strong>任意积性函数</strong>的值。</p>
 <p>其中”线性“的含义为 <strong>每个数字只被其最小的质因数筛出</strong> ，并非时间复杂度。</p>
-<p>假设求积性函数 $f(x)$ 的质数幂 $f(p^k)$ 复杂度为 $t$，则最终复杂度为 $ O(n+\frac{n}{\ln n}\times  t)$ 。</p>
+<p>假设求积性函数 $f(x)$ 的质数幂 $f(p^k)$ 复杂度为 $t$，则最终复杂度为 $ \mathcal O(n+\frac{n}{\ln n}\times  t)$ 。</p>
 <a id="more"></a>
 <h3 id="数论函数"><a href="#数论函数" class="headerlink" title="数论函数"></a>数论函数</h3><p>定义域为正整数集 $\mathbb N^+$，陪域为复数集 $\mathbb C$ 的函数。</p>
 <p>常见的数论函数可视为，定义域为正整数，值域为整数的函数。</p>
@@ -260,7 +334,7 @@ n = p_1^{k_1}\times p_2^{k_2}\times ...\times p_m^{k_m}\ (p_1<p_2<...<p_m)</scri
 <script type="math/tex; mode=display">
 \sigma_k(n)=\sum_{d|n} d^k</script><p>为避免重复，用大写 $K$ 表示所求幂次。</p>
 <p>同样直接分类讨论即可，注意维护 $g(n),k(n)$ 和计算 $\sigma_k(p^k)$ 的位置 。</p>
-<p>此时计算 $\sigma_k(p^k)$ 单次复杂度为 $O(\log (k\times K))$，总复杂度<strong>不再保持线性</strong>。</p>
+<p>此时计算 $\sigma_k(p^k)$ 单次复杂度为 $\mathcal O(\log (k\times K))$，总复杂度<strong>不再保持线性</strong>。</p>
 <div class="table-container">
 <table>
 <thead>
@@ -333,7 +407,7 @@ n = p_1^{k_1}\times p_2^{k_2}\times ...\times p_m^{k_m}\ (p_1<p_2<...<p_m)</scri
 </li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 20000007ll</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">rd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">char</span> c = getchar();</span><br><span class="line">  <span class="keyword">while</span> (!<span class="built_in">isdigit</span>(c)) c = getchar();</span><br><span class="line">  <span class="keyword">while</span> (<span class="built_in">isdigit</span>(c)) &#123;</span><br><span class="line">    x = x * <span class="number">10</span> + (c ^ <span class="number">48</span>);</span><br><span class="line">    c = getchar();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> vis[N];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> tot, f[N], prm[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  f[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; N; ++i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!vis[i]) prm[++tot] = i, f[i] = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= tot; ++j) &#123;</span><br><span class="line">       <span class="keyword">if</span> (<span class="number">1l</span>l * i * prm[j] &gt;= N) <span class="keyword">break</span>;</span><br><span class="line">       vis[i * prm[j]] = <span class="number">1</span>;</span><br><span class="line">       <span class="keyword">if</span> (i % prm[j] == <span class="number">0</span>) &#123;</span><br><span class="line">         f[i * prm[j]] = ((i / prm[j]) % prm[j]) ? f[i / prm[j]] : <span class="number">0</span>;</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       f[i * prm[j]] = f[i] &lt;&lt; <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; N; ++i) f[i] += f[i - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  init();</span><br><span class="line">  <span class="keyword">int</span> t = rd();</span><br><span class="line">  <span class="keyword">while</span> (t--) <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, f[rd()]);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>(还有一种做法即 $f=\mu^2 *\mu^2$ ，反演即可，查询单次 $O(\sqrt n)$ ，参考<a href="https://www.cnblogs.com/lfri/p/11382166.html" target="_blank" rel="noopener">这里</a>)</p>
+<p>(还有一种做法即 $f=\mu^2 *\mu^2$ ，反演即可，查询单次 $\mathcal O(\sqrt n)$ ，参考<a href="https://www.cnblogs.com/lfri/p/11382166.html" target="_blank" rel="noopener">这里</a>)</p>
 ]]></content>
       <categories>
         <category>数学</category>
@@ -342,5 +416,122 @@ n = p_1^{k_1}\times p_2^{k_2}\times ...\times p_m^{k_m}\ (p_1<p_2<...<p_m)</scri
       <tags>
         <tag>线性筛</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Codeforces Round 660</title>
+    <url>/2020/08/01/CFR660/</url>
+    <content><![CDATA[<p>官方题解链接： <a href="https://codeforces.com/blog/entry/80828" target="_blank" rel="noopener">Codeforces Round #660 Editorial</a></p>
+<a id="more"></a>
+<h2 id="A-Captain-Flint-and-Crew-Recruitment"><a href="#A-Captain-Flint-and-Crew-Recruitment" class="headerlink" title="A. Captain Flint and Crew Recruitment"></a>A. Captain Flint and Crew Recruitment</h2><p><a href="https://codeforces.com/contest/1388/problem/A" target="_blank" rel="noopener">Codeforces 1388 A</a></p>
+<p>如果一个正整数是两个 <strong>不同</strong> 质数的积，那么定义其为 <strong>类质数</strong> 。</p>
+<p>给定一个正整数 $n$，询问是否能将 $n$ 分解成四个 <strong>互不相同</strong> 的正整数，并满足这四个正整数中至少有三个是类质数。</p>
+<p>若能，则要求给出任意一种分解方案。</p>
+<p>多组数据  $t\le 10^3$ ， $n\le 2\times 10^5$</p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>四个互不相同的正整数，至少三个类质数。</p>
+<p>最小的三个类质数 $6,10,14$ ，和为 $30$ ，则 $n\le 30$ 无解。</p>
+<p>防止重复，$n=36,40,44$ 时用 $6,10,15,n-31$ 分解，其余情况用 $6,10,14,n-30$ 分解。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (n &lt;= <span class="number">30</span>) <span class="built_in">printf</span>(<span class="string">"NO\n"</span>);</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (n == <span class="number">36</span> || n == <span class="number">40</span> || n == <span class="number">44</span>) <span class="built_in">printf</span>(<span class="string">"YES\n6 10 15 %d\n"</span>, n - <span class="number">31</span>);</span><br><span class="line"><span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"YES\n6 10 14 %d\n"</span>, n - <span class="number">30</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="B-Captain-Flint-and-a-Long-Voyage"><a href="#B-Captain-Flint-and-a-Long-Voyage" class="headerlink" title="B. Captain Flint and a Long Voyage"></a>B. Captain Flint and a Long Voyage</h2><p><a href="https://codeforces.com/contest/1388/problem/B" target="_blank" rel="noopener">Codeforces 1388 B</a></p>
+<p>定义一个数的 <strong>二进制连缀表达式</strong> 为，将该数按位转换成二进制，再按原数位依次链接。</p>
+<p>例如 $729$ 的二进制连缀表达式为 $111101001$ ，因为二进制下 $7 = 111, 2= 10 , 9 = 1001$ 。</p>
+<p>现在要求构造一个 $n$ 位正整数 $x$，满足：</p>
+<ul>
+<li><p>将 $x$ 的二进制连缀表达式，删掉后 $n$ 位后最大（将二进制连缀表达式视作十进制数）</p>
+</li>
+<li><p>有多个删掉后相同的 $x$ ，输出其中最小的一个 </p>
+</li>
+</ul>
+<p>多组数据  $t\le 10^3$ ， $n\le 2\times 10^5$ ，$\sum n\le 2\times 10^5$</p>
+<h3 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h3><p>二进制下只有 $8(1000)$ 和 $9(1001)$ 是四位，想要最后的结果最大，位数不能少。</p>
+<p>因此 $x$ 只能由 $8$ 和 $9$ 构成，同时前缀应为 $9$ ，最后若干位受删除影响的可以放 $8$ 。</p>
+<p>注意到 $9(1001)$ 只要删掉最后一位就和 $8$ 相同，因此尾部需要放 $\lfloor\frac{n+3}{4}\rfloor$ 个 $8$ ，前缀都是 $9$ 。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> n8 = (n + <span class="number">3</span>) / <span class="number">4</span>;</span><br><span class="line"><span class="keyword">int</span> n9 = n - n8;</span><br><span class="line"><span class="keyword">while</span> (n9--) <span class="built_in">putchar</span>(<span class="string">'9'</span>);</span><br><span class="line"><span class="keyword">while</span> (n8--) <span class="built_in">putchar</span>(<span class="string">'8'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="C-Uncle-Bogdan-and-Country-Happiness"><a href="#C-Uncle-Bogdan-and-Country-Happiness" class="headerlink" title="C. Uncle Bogdan and Country Happiness"></a>C. Uncle Bogdan and Country Happiness</h2><p><a href="https://codeforces.com/contest/1388/problem/C" target="_blank" rel="noopener">Codeforces 1388 C</a></p>
+<p>一个国家，$n$ 个城市和 $n-1$ 条道路构成树形结构，$1$ 号城市是首都。</p>
+<p>国家总人口数为 $m$ ，第 $i$ 号城市居住人口为 $p_i$ ，保证 $\sum p_i=m$ 。</p>
+<p>每天早上所有人从所居住的城市前往首都上班，晚上下班回到所居住的城市，走最短路。</p>
+<p>每个人下班时都会高兴或不高兴，人们在 <strong>道路上</strong> 情绪 <strong>只可能</strong> 会从高兴变成不高兴，或保持不变。</p>
+<p>每个城市都安装了幸福指数检测器，能够统计下班路上高兴的人数 $h_i$ 和不高兴的人数 $s_i$ 。</p>
+<p>具体的说，若下班路上经过城市 $i$ 的有 $h_i$ 个高兴的人，有 $s_i$ 个不高兴的人，则显示器显示 $a_i=h_i-s_i$ 。</p>
+<p>现给定一组 $a_1…a_n$ ，询问是否存在一种可能的情况满足 $a_1…a_n$ 都成立。</p>
+<p>多组数据  $t\le 10^4$ ， $n\le 10^5$ ，$\sum n\le 2\times 10^5$ ， $m\le 10^9$</p>
+<h3 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h3><p>可行性验证，设 $1$ 号首都为根，树上后缀和就是对应到该点的总人数 $totp_i$。</p>
+<p>对于 $a_i$ 和 $totp_i$ 固定， $h_i$ 和 $s_i$ 也就固定了：$h_i-s_i=a_i,\ h_i+s_i=totp_i$ 。</p>
+<p>因此只需找出不合法情况：</p>
+<ul>
+<li><p>$a_i$ 和 $totp_i$ 奇偶性不同</p>
+</li>
+<li><p>求出 $h_i&lt;0$ 或 $s_i&lt;0$</p>
+</li>
+<li><p>对于所有子节点，$\sum h_{son}&gt;h_i$ （心情可以由好变坏，$s$ 无需验证）</p>
+</li>
+</ul>
+<p>代码中 $0$ 代表合法，$1$ 代表不合法。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> fa)</span> </span>&#123;</span><br><span class="line">  totp[x] = p[x];</span><br><span class="line">  <span class="keyword">int</span> toth = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = hd[x]; i; i = nxt[i])</span><br><span class="line">    <span class="keyword">if</span> (ver[i] != fa) &#123;</span><br><span class="line">      <span class="keyword">if</span> (dfs(ver[i], x)) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">      totp[x] += totp[ver[i]];</span><br><span class="line">      toth += h[ver[i]];</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">if</span> ((totp[x] &amp; <span class="number">1</span>) != (<span class="built_in">abs</span>(a[x]) &amp; <span class="number">1</span>)) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  h[x] = (totp[x] + a[x]) / <span class="number">2</span>;</span><br><span class="line">  s[x] = totp[x] - h[x];</span><br><span class="line">  <span class="keyword">if</span> (h[x] &lt; <span class="number">0</span> || s[x] &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (toth &gt; h[x]) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="D-Captain-Flint-and-Treasure"><a href="#D-Captain-Flint-and-Treasure" class="headerlink" title="D. Captain Flint and Treasure"></a>D. Captain Flint and Treasure</h2><p><a href="https://codeforces.com/contest/1388/problem/D" target="_blank" rel="noopener">Codeforces 1388 D</a></p>
+<p>有两个长度为 $n$ 的数组 $a$ 和 $b$ 。</p>
+<p>一开始，答案 $ans$ 为 $0$，进行如下操作：</p>
+<ul>
+<li><p>选择一个位置 $i(1\le i\le n)$， 将 $a_i$ 加到 $ans$ 中。</p>
+</li>
+<li><p>如果 $b_i \neq -1$ ，将 $a_i$ 加到 $a_{b_i}$ 上。 </p>
+</li>
+</ul>
+<p>现确定一个操作序列 $s$ ，为 $1,..,n$ 的全排列，使得依次操作后， $ans$ 的值最大。</p>
+<p>数据保证：$b_i$，$b_{b_i}$ , $b_{b_{b_i}}$，… 不会出现循环（总以 $-1$ 结束）</p>
+<p> $n\le 2\times 10^5$ ，$-10^6\le a_i\le 10^6$ ， $1\le b_i\le n$ 或 $b_i = -1$</p>
+<h3 id="Solution-3"><a href="#Solution-3" class="headerlink" title="Solution"></a>Solution</h3><p>每个点最多只有一个指向，无环，森林结构。</p>
+<p>假设 $i$ 号点在最终累计答案时的取值为 $mx_i$ 。</p>
+<p>枚举子节点，若最终 $mx_{son} &gt; 0$ ，则该值可在父节点继续贡献，将其值加到当前点上，反之不加。</p>
+<p>第一遍 <code>dfs</code> 求最优解，第二遍 <code>dfs2</code> 输出方案。</p>
+<p>对于当前点 $x$，先搜 $mx_{son} &gt; 0$ 的子节点，先输出他们的编号，再输出 $x$ 的编号，再搜其他子节点即可。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  mx[x] = a[x];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = hd[x]; i; i = nxt[i]) &#123;</span><br><span class="line">    dfs(ver[i]);</span><br><span class="line">    mx[x] += <span class="built_in">max</span>(mx[ver[i]], <span class="number">0l</span>l);</span><br><span class="line">  &#125;</span><br><span class="line">  ans += mx[x];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs2</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = hd[x]; i; i = nxt[i])</span><br><span class="line">    <span class="keyword">if</span> (mx[ver[i]] &gt; <span class="number">0</span>) dfs2(ver[i]);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d "</span>, x);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = hd[x]; i; i = nxt[i])</span><br><span class="line">    <span class="keyword">if</span> (mx[ver[i]] &lt;= <span class="number">0</span>) dfs2(ver[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（E 留坑）</p>
+]]></content>
+      <categories>
+        <category>套题</category>
+        <category>CodeForces</category>
+      </categories>
+      <tags>
+        <tag>构造</tag>
+        <tag>贪心</tag>
+        <tag>三分</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NexT 主题优化</title>
+    <url>/2020/07/22/Next/</url>
+    <content><![CDATA[<p>简单记录一下优化 NexT 主题过程中的一些细节。</p>
+<p>There is a negligible beginning in all great action and thought.</p>
+<a id="more"></a>
+<h3 id="圆角设置"><a href="#圆角设置" class="headerlink" title="圆角设置"></a>圆角设置</h3><p>此优化仅对 Pisces 和 Gemini 主题适用。</p>
+<p>(以 Pisces 为例）修改文件 <code>\themes\next\source\css\_variables\Pisces.styl</code></p>
+<p>将 <code>Borders</code> 下对应位置的 <code>initial</code> 改为</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$border-radius-inner            = 15px 15px 15px 15px;</span><br><span class="line">$border-radius                  = 15px;</span><br></pre></td></tr></table></figure>
+<h3 id="背景色更换"><a href="#背景色更换" class="headerlink" title="背景色更换"></a>背景色更换</h3><p>修改文件 <code>themes\next\source\css\_custom\custom.styl</code> ，添加：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#F0F0F0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="去除顶部细线"><a href="#去除顶部细线" class="headerlink" title="去除顶部细线"></a>去除顶部细线</h3><p>修改文件 <code>themes\next\source\css\_custom\custom.styl</code> </p>
+<p>添加代码 <code>.headband {display:none;}</code></p>
+<h3 id="页面宽度位置设置"><a href="#页面宽度位置设置" class="headerlink" title="页面宽度位置设置"></a>页面宽度位置设置</h3><p>修改文件 <code>themes\next\source\css\_custom\custom.styl</code> ，添加：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">.content-wrap &#123;</span><br><span class="line">    margin: 25px auto;</span><br><span class="line">    padding-top: 40px;</span><br><span class="line">    padding-right: 100px;</span><br><span class="line">    padding-bottom: 40px;</span><br><span class="line">    padding-left: 100px;</span><br><span class="line">    width: calc(100% - 280px);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.header-inner &#123;</span><br><span class="line">    margin: 25px auto;</span><br><span class="line">&#125;</span><br><span class="line">.sidebar-inner &#123;</span><br><span class="line">    margin: 25px auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实想要修改页面形态效果，直接在对应的网页 <code>Styles</code>上修改，然后复制到 <code>custom.styl</code> 即可。</p>
+<h3 id="Sidebar-头像链接主页"><a href="#Sidebar-头像链接主页" class="headerlink" title="Sidebar 头像链接主页"></a>Sidebar 头像链接主页</h3><p>修改文件 <code>themes\next\layout\_macro\sidebar.swig</code>，找到对应位置：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">"site-author-image"</span> <span class="attr">itemprop</span>=<span class="string">"image"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">src</span>=<span class="string">"&#123;&#123; url_for( theme.avatar | default(theme.images + '/avatar.gif') ) &#125;&#125;"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">alt</span>=<span class="string">"&#123;&#123; theme.author &#125;&#125;"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>找到中间三行，添加第一行 <code>&lt;a href=&quot;/&quot;&gt;</code> 和最后一行 <code>&lt;/a&gt;</code> 即可，中间部分不用修改。</p>
+<h3 id="Sidebar-posts-链接修复"><a href="#Sidebar-posts-链接修复" class="headerlink" title="Sidebar posts 链接修复"></a>Sidebar posts 链接修复</h3><p>修改文件 <code>themes/next/layout/_macro/sidebar.swing</code> ，找到对应位置：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> config.archive_dir != <span class="string">'/'</span> and site.posts.length &gt; <span class="number">0</span> %&#125;</span><br><span class="line">	&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"site-state-item site-state-posts"</span>&gt;</span><br><span class="line">    	&#123;% <span class="keyword">if</span> theme.menu.archives %&#125;</span><br><span class="line">        	&lt;a href=<span class="string">"&#123;&#123; url_for(theme.menu.archives).split('||')[0] | trim &#125;&#125;"</span>&gt;</span><br><span class="line">        &#123;% <span class="keyword">else</span> %&#125;</span><br><span class="line">            &lt;a href=<span class="string">"&#123;&#123; url_for(config.archive_dir) &#125;&#125;"</span>&gt;</span><br><span class="line">        &#123;% endif %&#125;</span><br><span class="line">            	&lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">"site-state-item-count"</span>&gt;&#123;&#123; site.posts.length &#125;&#125;&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">            	&lt;span class="site-state-item-name"&gt;&#123;&#123; __('state.posts') &#125;&#125;&lt;/</span>span&gt;</span><br><span class="line">      		&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>删掉判断部分，保留 <code>else</code> 的内容，即：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> config.archive_dir != <span class="string">'/'</span> and site.posts.length &gt; <span class="number">0</span> %&#125;</span><br><span class="line">	&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"site-state-item site-state-posts"</span>&gt;</span><br><span class="line">    	&lt;a href=<span class="string">"&#123;&#123; url_for(config.archive_dir) &#125;&#125;"</span>&gt;</span><br><span class="line">        	&lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">"site-state-item-count"</span>&gt;&#123;&#123; site.posts.length &#125;&#125;&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">            &lt;span class="site-state-item-name"&gt;&#123;&#123; __('state.posts') &#125;&#125;&lt;/</span>span&gt;</span><br><span class="line">        &lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Sidebar-Social-开关"><a href="#Sidebar-Social-开关" class="headerlink" title="Sidebar Social 开关"></a>Sidebar Social 开关</h3><p>修改文件 <code>themes/next/_config.yml</code> ，搜索 <code>social</code>，打开你想要的开关。</p>
+<p>貌似一些 <code>Social</code> 开关是隐藏的，比如 <code>QQ</code> ， <code>Wechat</code> 或 <code>Weibo</code> ，仿照格式写就可以。</p>
+<p>如果想只显示图标（如本站），打开 <code>social_icons</code> 下的 <code>icons_only</code> 开关即可。</p>
+<h3 id="Sidebar-显示进度条和返回"><a href="#Sidebar-显示进度条和返回" class="headerlink" title="Sidebar 显示进度条和返回"></a>Sidebar 显示进度条和返回</h3><p>修改文件 <code>themes/next/_config.yml</code> ，搜索关键字 <code>b2t</code> ，把这两个选项改为 <code>true</code> ：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Back to top in sidebar</span></span><br><span class="line"><span class="attr">b2t:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Scroll percent label in b2t button</span></span><br><span class="line"><span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="pdf-文件显示"><a href="#pdf-文件显示" class="headerlink" title="pdf 文件显示"></a>pdf 文件显示</h3><p>参考：<a href="https://blog.csdn.net/wugenqiang/article/details/88377669" target="_blank" rel="noopener">Hexo NexT主题内添加pdf 插件</a></p>
+<h3 id="折叠展开功能"><a href="#折叠展开功能" class="headerlink" title="折叠展开功能"></a>折叠展开功能</h3><p>参考：<a href="https://www.cnblogs.com/woshimrf/p/hexo-fold-block.html" target="_blank" rel="noopener">Hexo NexT 主题内添加折叠块功能</a></p>
+<h3 id="修改文章-Tag-图标"><a href="#修改文章-Tag-图标" class="headerlink" title="修改文章 Tag 图标"></a>修改文章 Tag 图标</h3><p>修改文件 <code>/themes/next/layout/_macro/post.swing</code> </p>
+<p>搜索 <code>rel=&quot;tag&quot;&gt;#</code> 将 <code>#</code> 替换为 <code>&lt;i class=&quot;fa fa-envira&quot;&gt;&lt;/i&gt;</code>，即可显示 fa-tag 图标。</p>
+<p>To be continued…</p>
+]]></content>
   </entry>
 </search>
